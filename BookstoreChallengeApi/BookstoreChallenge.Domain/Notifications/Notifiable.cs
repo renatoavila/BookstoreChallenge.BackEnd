@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Desafio.Domain.Notifications
+namespace BookstoreChallenge.Domain.Notifications
 {
     public class Notifiable
     {

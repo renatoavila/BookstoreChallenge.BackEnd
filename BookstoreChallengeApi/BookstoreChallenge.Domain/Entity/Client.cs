@@ -2,10 +2,10 @@
 using System.Collections.Generic; 
 using System.Text;
 using Dapper.Contrib.Extensions;
-using Desafio.Domain.Entity.Base;
+using BookstoreChallenge.Domain.Entity.Base;
 using Newtonsoft.Json;
 
-namespace Desafio.Domain.Entity
+namespace BookstoreChallenge.Domain.Entity
 {
 
     [Table("Client")]

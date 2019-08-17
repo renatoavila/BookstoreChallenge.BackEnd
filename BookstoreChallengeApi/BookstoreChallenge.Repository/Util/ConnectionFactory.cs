@@ -3,7 +3,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Desafio.Repository.Util
+namespace BookstoreChallenge.Repository.Util
 {
     public class ConnectionFactory  
     {

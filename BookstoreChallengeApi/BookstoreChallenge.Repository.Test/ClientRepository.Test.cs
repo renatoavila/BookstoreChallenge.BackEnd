@@ -1,8 +1,8 @@
 using Dapper.Contrib.Extensions;
-using Desafio.Domain.Entity;
-using Desafio.Repository.Base;
-using Desafio.Repository.Interface;
-using Desafio.Repository.Util;
+using BookstoreChallenge.Domain.Entity;
+using BookstoreChallenge.Repository.Base;
+using BookstoreChallenge.Repository.Interface;
+using BookstoreChallenge.Repository.Util;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Threading;
 using Xunit;
 
-namespace Desafio.Repository.Test
+namespace BookstoreChallenge.Repository.Test
 {
     public class ClientRepository_Test
     {

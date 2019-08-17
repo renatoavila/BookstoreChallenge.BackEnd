@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Desafio.Repository.Interface
+namespace BookstoreChallenge.Repository.Interface
 {
     public interface IRepository<T>
     {

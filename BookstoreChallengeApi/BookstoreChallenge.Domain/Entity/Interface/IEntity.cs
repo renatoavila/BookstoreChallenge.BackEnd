@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Desafio.Domain.Entity.Interfaces
+namespace BookstoreChallenge.Domain.Entity.Interfaces
 {
     public interface IEntity 
     {

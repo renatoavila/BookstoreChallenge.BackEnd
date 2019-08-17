@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
-using Desafio.Domain.Entity.Interfaces;
-using Desafio.Repository.Interface;
-using Desafio.Repository.Util;
+using BookstoreChallenge.Domain.Entity.Interfaces;
+using BookstoreChallenge.Repository.Interface;
+using BookstoreChallenge.Repository.Util;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using Npgsql;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 
-namespace Desafio.Repository.Base
+namespace BookstoreChallenge.Repository.Base
 {
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {

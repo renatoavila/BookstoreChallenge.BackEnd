@@ -1,12 +1,12 @@
 ﻿using Dapper.Contrib.Extensions;
-using Desafio.Domain.Entity.Interfaces;
-using Desafio.Domain.Notifications;
+using BookstoreChallenge.Domain.Entity.Interfaces;
+using BookstoreChallenge.Domain.Notifications;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Desafio.Domain.Entity.Base
+namespace BookstoreChallenge.Domain.Entity.Base
 {
     public class Entity : Notifiable, IEntity
     {

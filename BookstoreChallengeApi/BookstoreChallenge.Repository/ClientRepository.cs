@@ -1,11 +1,11 @@
-﻿using Desafio.Domain.Entity;
-using Desafio.Repository.Base;
-using Desafio.Repository.Interface;
+﻿using BookstoreChallenge.Domain.Entity;
+using BookstoreChallenge.Repository.Base;
+using BookstoreChallenge.Repository.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Desafio.Repository
+namespace BookstoreChallenge.Repository
 {
     public class ClientRepository : Repository<Client>, IClientRepository
     {

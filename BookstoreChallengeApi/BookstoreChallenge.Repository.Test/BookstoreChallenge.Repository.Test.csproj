@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Desafio.Domain\Desafio.Domain.csproj" />
-    <ProjectReference Include="..\Desafio.Repository\Desafio.Repository.csproj" />
+    <ProjectReference Include="..\BookstoreChallenge.Domain\BookstoreChallenge.Domain.csproj" />
+    <ProjectReference Include="..\BookstoreChallenge.Repository\BookstoreChallenge.Repository.csproj" />
   </ItemGroup>
 
 </Project>
