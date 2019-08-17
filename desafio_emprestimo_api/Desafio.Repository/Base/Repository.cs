@@ -268,7 +268,7 @@ namespace Desafio.Repository.Base
                         && (ex.Message.Equals("The operation has timed out.")
                             || ex.Message.Contains("40P01:")))
             {
-                _logger.LogWarning(ex, $"TRY: {retryCount}{ex.Message}", entity);
+                _logger.LogWarning(ex, $"TRY: {retryCount} - {ex.Message}", entity);
                 retryCount++;
                 Thread.Sleep(RETRY_TIME_SECONDS * 1000);
                 return true;

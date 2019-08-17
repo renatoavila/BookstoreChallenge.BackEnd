@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Desafio.Repository.Test
 {
-    public class RespositoryTest
+    public class ClientRepository_Test
     {
         private readonly IConfiguration _config;
         private readonly ILogger<Repository<Client>> _logger;
@@ -28,8 +28,9 @@ namespace Desafio.Repository.Test
         [Fact]
         public void Test1()
         {
-           
-            
+            //h9ov3cr4wcoMbLew
+            //
+            //"Host=35.199.105.110;Database=desafiodb;User ID=desafio;Password=h9ov3cr4wcoMbLew"
         }
 
         
