@@ -250,16 +250,14 @@ namespace BookstoreChallenge.Repository.Base
 
         private string GetTableName()
         {
-
-            return typeof(T).Name.ToLower();
-            //var dnAttribute = typeof(T).GetCustomAttributes(
-            //    typeof(TableAttribute), true
-            //).FirstOrDefault() as TableAttribute;
-            //if (dnAttribute != null)
-            //{
-            //    return dnAttribute.Name;
-            //}
-            //return null;
+            var dnAttribute = typeof(T).GetCustomAttributes(
+                typeof(TableAttribute), true
+            ).FirstOrDefault() as TableAttribute;
+            if (dnAttribute != null)
+            {
+                return dnAttribute.Name;
+            }
+            return null;
         }
 
         private bool ValidateException(Exception ex, object obj, ref int retryCount)
