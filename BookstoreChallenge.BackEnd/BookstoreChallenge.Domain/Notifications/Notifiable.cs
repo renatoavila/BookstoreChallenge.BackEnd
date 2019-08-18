@@ -1,4 +1,4 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using BookstoreChallenge.Util.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

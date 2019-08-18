@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookstoreChallenge.Api</name>
+    </assembly>
+    <members>
+        <member name="M:BookstoreChallenge.Api.Controllers.ClientController.Get(System.Guid)">
+            <summary>
+            Return a Client
+            </summary>
+            <param name="key">Key of client</param>
+            <returns>Return a Client</returns>
+            <response code="200">Return a Client</response>
+            <response code="500">Internal error</response>
+        </member>
+        <member name="M:BookstoreChallenge.Api.Controllers.ClientController.Post(BookstoreChallenge.Domain.Entity.Client)">
+            <summary>
+            Insert new client
+            </summary>
+            <param name="client"></param>
+            <returns>Um novo item criado</returns>
+            <response code="200">Return client of key </response>
+            <response code="400">Fail request</response>
+            <response code="500">Internal error</response>
+        </member>
+    </members>
+</doc>

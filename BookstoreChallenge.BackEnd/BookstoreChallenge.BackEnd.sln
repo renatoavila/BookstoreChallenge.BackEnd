@@ -7,13 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreChallenge.Reposito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreChallenge.Domain", "BookstoreChallenge.Domain\BookstoreChallenge.Domain.csproj", "{53D450FC-AE62-4550-A9A6-F2997E7C57A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreChallenge.Repository.Test", "BookstoreChallenge.Repository.Test\BookstoreChallenge.Repository.Test.csproj", "{9C304B79-DB07-410A-9386-3E3AC7F842FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreChallenge.Business", "BookstoreChallenge.Business\BookstoreChallenge.Business.csproj", "{E0FD26F3-027E-40DA-BF33-BF46BA4A8CF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreChallenge.Business", "BookstoreChallenge.Business\BookstoreChallenge.Business.csproj", "{E0FD26F3-027E-40DA-BF33-BF46BA4A8CF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreChallenge.Service", "BookstoreChallenge.Service\BookstoreChallenge.Service.csproj", "{652A650D-E631-4AB2-A75F-E507E4C503BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreChallenge.Service", "BookstoreChallenge.Service\BookstoreChallenge.Service.csproj", "{652A650D-E631-4AB2-A75F-E507E4C503BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookstoreChallenge.Api", "BookstoreChallenge.Api\BookstoreChallenge.Api.csproj", "{E905CC26-3692-432F-B199-589CF1250223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreChallenge.Api", "BookstoreChallenge.Api\BookstoreChallenge.Api.csproj", "{E905CC26-3692-432F-B199-589CF1250223}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreChallenge.Api.Test", "BookstoreChallenge.Api.Test\BookstoreChallenge.Api.Test.csproj", "{7F7C4C35-6EEE-43D5-9F15-48392AD7E26B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookstoreChallenge.Util", "BookstoreChallenge.Util\BookstoreChallenge.Util.csproj", "{1BAE5D7C-2A9E-4C81-884D-DA4FDB1E643C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +31,6 @@ Global
 		{53D450FC-AE62-4550-A9A6-F2997E7C57A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53D450FC-AE62-4550-A9A6-F2997E7C57A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53D450FC-AE62-4550-A9A6-F2997E7C57A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C304B79-DB07-410A-9386-3E3AC7F842FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C304B79-DB07-410A-9386-3E3AC7F842FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C304B79-DB07-410A-9386-3E3AC7F842FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C304B79-DB07-410A-9386-3E3AC7F842FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0FD26F3-027E-40DA-BF33-BF46BA4A8CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0FD26F3-027E-40DA-BF33-BF46BA4A8CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0FD26F3-027E-40DA-BF33-BF46BA4A8CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +43,14 @@ Global
 		{E905CC26-3692-432F-B199-589CF1250223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E905CC26-3692-432F-B199-589CF1250223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E905CC26-3692-432F-B199-589CF1250223}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F7C4C35-6EEE-43D5-9F15-48392AD7E26B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F7C4C35-6EEE-43D5-9F15-48392AD7E26B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F7C4C35-6EEE-43D5-9F15-48392AD7E26B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F7C4C35-6EEE-43D5-9F15-48392AD7E26B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BAE5D7C-2A9E-4C81-884D-DA4FDB1E643C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAE5D7C-2A9E-4C81-884D-DA4FDB1E643C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BAE5D7C-2A9E-4C81-884D-DA4FDB1E643C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAE5D7C-2A9E-4C81-884D-DA4FDB1E643C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

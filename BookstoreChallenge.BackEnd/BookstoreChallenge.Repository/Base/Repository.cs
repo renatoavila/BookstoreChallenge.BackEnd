@@ -1,18 +1,15 @@
-﻿using Dapper;
-using Dapper.Contrib.Extensions;
-using BookstoreChallenge.Domain.Entity.Interfaces;
+﻿using BookstoreChallenge.Domain.Entity.Interfaces;
+using BookstoreChallenge.Util.Extensions;
 using BookstoreChallenge.Repository.Interface;
 using BookstoreChallenge.Repository.Util;
+using Dapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Text;
 using System.Linq;
-using System.Data;
-using Npgsql;
-using Microsoft.Extensions.Logging;
 using System.Threading;
+
 
 namespace BookstoreChallenge.Repository.Base
 {
@@ -69,11 +66,10 @@ namespace BookstoreChallenge.Repository.Base
                     using (var conn = new ConnectionFactory().GetConnection(_config.GetConnectionString(DEFAULT_CONNECTION)))
                     {
                         if (entity.Id == 0)
-                        {
                             entity.Id = this.GetId(entity.Key);
-                        }
 
-                        ret = conn.Update<T>(entity);
+                        if (entity.Id > 0)
+                            ret = conn.Update<T>(entity);
                     }
                     break;
                 }
@@ -118,7 +114,7 @@ namespace BookstoreChallenge.Repository.Base
         public virtual T Get(Guid key)
         {
             int retryCount = 0;
-            T ret;
+            T ret = null;
             do
             {
                 try
@@ -126,13 +122,14 @@ namespace BookstoreChallenge.Repository.Base
                     using (var conn = new ConnectionFactory().GetConnection(_config.GetConnectionString("DefaultConnection")))
                     {
                         var id = this.GetId(key);
-                        ret = conn.Get<T>(id);
+                        if (id > 0)
+                            ret = conn.Get<T>(id);
                     }
                     break;
                 }
                 catch (Exception ex)
                 {
-                    if (!ValidateException(ex, null, ref retryCount))
+                    if (!ValidateException(ex, new { key = key }, ref retryCount))
                     {
                         throw;
                     }
@@ -208,13 +205,13 @@ namespace BookstoreChallenge.Repository.Base
                 {
                     using (var conn = new ConnectionFactory().GetConnection(_config.GetConnectionString(DEFAULT_CONNECTION)))
                     {
-                        id = conn.Query<long>($"select id from {GetTableName()} ", new { key = key }).FirstOrDefault<long>();
+                        id = conn.Query<int>($"select id from {GetTableName()} where \"Key\" = @Key", new { Key = key }).FirstOrDefault<int>();
                     }
                     break;
                 }
                 catch (Exception ex)
                 {
-                    if (!ValidateException(ex, null, ref retryCount))
+                    if (!ValidateException(ex, new { key = key }, ref retryCount))
                     {
                         throw;
                     }
@@ -234,48 +231,51 @@ namespace BookstoreChallenge.Repository.Base
                 {
                     using (var conn = new ConnectionFactory().GetConnection(_config.GetConnectionString(DEFAULT_CONNECTION)))
                     {
-                        key = conn.Query<Guid>($"select id from {GetTableName()} ", new { id = id }).FirstOrDefault<Guid>();
+                        key = conn.Query<Guid>($"select \"Key\" from {GetTableName()} where id = @id", new { id = id }).FirstOrDefault<Guid>();
                     }
                     break;
                 }
                 catch (Exception ex)
                 {
-                    if (!ValidateException(ex, null, ref retryCount))
+                    if (!ValidateException(ex, new { id = id }, ref retryCount))
                     {
                         throw;
                     }
                 }
             } while (true);
 
-            return key;
+            //return key;
+            return Guid.NewGuid();
         }
 
         private string GetTableName()
         {
-            var dnAttribute = typeof(T).GetCustomAttributes(
-                typeof(TableAttribute), true
-            ).FirstOrDefault() as TableAttribute;
-            if (dnAttribute != null)
-            {
-                return dnAttribute.Name;
-            }
-            return null;
+
+            return typeof(T).Name.ToLower();
+            //var dnAttribute = typeof(T).GetCustomAttributes(
+            //    typeof(TableAttribute), true
+            //).FirstOrDefault() as TableAttribute;
+            //if (dnAttribute != null)
+            //{
+            //    return dnAttribute.Name;
+            //}
+            //return null;
         }
 
-        private bool ValidateException(Exception ex, T entity, ref int retryCount)
+        private bool ValidateException(Exception ex, object obj, ref int retryCount)
         {
-            if (retryCount < RETRY
+            retryCount++;
+            if (retryCount <= RETRY
                         && (ex.Message.Equals("The operation has timed out.")
                             || ex.Message.Contains("40P01:")))
             {
-                _logger.LogWarning(ex, $"TRY: {retryCount} - {ex.Message}", entity);
-                retryCount++;
+                _logger.LogWarning(ex, $"TRY: {retryCount} - {ex.Message}", obj);
                 Thread.Sleep(RETRY_TIME_SECONDS * 1000);
                 return true;
             }
             else
             {
-                _logger.LogError(ex, ex.Message, entity);
+                _logger.LogError(ex, ex.Message, obj);
                 return false;
             }
         }
