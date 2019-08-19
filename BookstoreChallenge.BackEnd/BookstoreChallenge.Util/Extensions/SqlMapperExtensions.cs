@@ -6,8 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Collections.Concurrent;
 using System.Reflection.Emit;
-using Dapper;  
- 
+using Dapper;
+using System.Linq.Expressions;
+
 namespace BookstoreChallenge.Util.Extensions
 {
     /// <summary>
@@ -268,6 +269,84 @@ namespace BookstoreChallenge.Util.Extensions
             return list;
         }
 
+        public static IEnumerable<T> GetList<T>(this IDbConnection connection, Expression<Func<T, bool>> expression = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
+        {
+            var type = typeof(T);
+            var cacheType = typeof(List<T>);
+
+            string sql = string.Empty;
+
+            GetSingleKey<T>(nameof(GetAll));
+            var name = GetTableName(type);
+            object param = null;
+            sql = "select * from " + name;
+            if (expression != null)
+            {
+                sql += " where " + CreateWhereClause<T>(expression, ref param);
+            }
+
+
+            if (!type.IsInterface) return connection.Query<T>(sql, param, transaction, commandTimeout: commandTimeout);
+
+            var result = connection.Query(sql);
+            var list = new List<T>();
+            foreach (IDictionary<string, object> res in result)
+            {
+                var obj = ProxyGenerator.GetInterfaceProxy<T>();
+                foreach (var property in TypePropertiesCache(type))
+                {
+                    var val = res[property.Name];
+                    if (val == null) continue;
+                    if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        var genericType = Nullable.GetUnderlyingType(property.PropertyType);
+                        if (genericType != null) property.SetValue(obj, Convert.ChangeType(val, genericType), null);
+                    }
+                    else
+                    {
+                        property.SetValue(obj, Convert.ChangeType(val, property.PropertyType), null);
+                    }
+                }
+                ((IProxy)obj).IsDirty = false;   //reset change tracking and return
+                list.Add(obj);
+            }
+            return list;
+        }
+
+        private static string CreateWhereClause<T>(Expression<Func<T, bool>> expression,ref object param)
+        {
+            foreach (var item in expression.Parameters)
+            {
+                // criar parametros - sql injection
+            }
+
+            var expBody = expression.Body.ToString();
+            var paramName = expression.Parameters[0].Name;
+
+            expBody = expBody
+                 .Replace("\"", "'")
+                 .Replace(paramName + ".", "\"")
+                 .Replace("AndAlso", "and ")
+                 .Replace("OrElse", "or ")
+                 .Replace("\"Id", "id ", StringComparison.OrdinalIgnoreCase)
+                 .Replace("==", "=")
+                 ;
+            var sp = expBody.Split("\"");
+            expBody = sp[0];
+            for (int i = 1; i < sp.Length; i++)
+            {
+                string aux = "\"" + sp[i] + "\"";
+                if (sp[i].Trim().IndexOf(' ') > 0)
+                {
+                    aux = "\"" + sp[i].Substring(0, sp[i].IndexOf(' ')) + "\"" + sp[i].Substring(sp[i].IndexOf(' '), sp[i].Length - sp[i].IndexOf(' '));
+                }
+                expBody += aux;
+            }
+
+            expBody = expBody.Replace("\"\"", "\"").TrimEnd('\"');
+            return expBody;
+        }
+
         /// <summary>
         /// Specify a custom table name mapper based on the POCO type name
         /// </summary>
@@ -283,9 +362,9 @@ namespace BookstoreChallenge.Util.Extensions
             }
             else
             {
- 
+
                 var info = type;
- 
+
                 //NOTE: This as dynamic trick falls back to handle both our own Table-attribute as well as the one in EntityFramework 
                 var tableAttrName =
                     info.GetCustomAttribute<TableAttribute>(false)?.Name
@@ -295,13 +374,12 @@ namespace BookstoreChallenge.Util.Extensions
                 {
                     name = tableAttrName;
                 }
-                // todo: ver isso
-                //else
-                //{
-                //    name = type.Name + "s";
-                //    if (type.IsInterface() && name.StartsWith("I"))
-                //        name = name.Substring(1);
-                //}
+                else
+                {
+                    name = type.Name;
+                    if (type.IsInterface && name.StartsWith("I"))
+                        name = name.Substring(1);
+                }
             }
 
             TypeTableName[type.TypeHandle] = name;
@@ -554,9 +632,9 @@ namespace BookstoreChallenge.Util.Extensions
 
             private static AssemblyBuilder GetAsmBuilder(string name)
             {
- 
+
                 return AssemblyBuilder.DefineDynamicAssembly(new AssemblyName { Name = name }, AssemblyBuilderAccess.Run);
- 
+
             }
 
             public static T GetInterfaceProxy<T>()
@@ -586,9 +664,9 @@ namespace BookstoreChallenge.Util.Extensions
                     var isId = property.GetCustomAttributes(true).Any(a => a is KeyAttribute);
                     CreateProperty<T>(typeBuilder, property.Name, property.PropertyType, setIsDirtyMethod, isId);
                 }
- 
+
                 var generatedType = typeBuilder.CreateType();
- 
+
 
                 TypeCache.Add(typeOfT, generatedType);
                 return (T)Activator.CreateInstance(generatedType);
@@ -793,7 +871,7 @@ public partial interface ISqlAdapter
     /// <param name="columnName">The column name.</param>
     void AppendColumnNameEqualsValue(StringBuilder sb, string columnName);
 }
- 
+
 /// <summary>
 /// The Postgres database adapter.
 /// </summary>
@@ -858,7 +936,7 @@ public partial class PostgresAdapter : ISqlAdapter
     {
         if (columnName.Equals("id", StringComparison.OrdinalIgnoreCase))
             sb.AppendFormat("{0}", columnName);
-        else 
+        else
             sb.AppendFormat("\"{0}\"", columnName);
     }
 
@@ -874,6 +952,8 @@ public partial class PostgresAdapter : ISqlAdapter
         else
             sb.AppendFormat("\"{0}\" = @{1}", columnName, columnName);
     }
+
+
 }
- 
- 
+
+

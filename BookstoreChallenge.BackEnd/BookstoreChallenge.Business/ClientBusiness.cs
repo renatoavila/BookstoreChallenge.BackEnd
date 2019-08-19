@@ -10,10 +10,12 @@ namespace BookstoreChallenge.Business
     public class ClientBusiness : IClientBusiness
     {
         private readonly IClientRepository _clientRepository;
+
         public ClientBusiness(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
         }
+
         public Client Get(Guid key)
         {
             return _clientRepository.Get(key);
@@ -29,7 +31,7 @@ namespace BookstoreChallenge.Business
 
         public void Del(Guid key)
         {
-             _clientRepository.Delete(new Client { Key = key });
+            _clientRepository.Delete(new Client { Key = key });
         }
 
         public bool CPFValidate(Client client)

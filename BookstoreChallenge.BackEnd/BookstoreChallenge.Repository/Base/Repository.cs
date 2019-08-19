@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-
+using System.Linq.Expressions;
 
 namespace BookstoreChallenge.Repository.Base
 {
@@ -130,6 +130,32 @@ namespace BookstoreChallenge.Repository.Base
                 catch (Exception ex)
                 {
                     if (!ValidateException(ex, new { key = key }, ref retryCount))
+                    {
+                        throw;
+                    }
+                }
+            } while (true);
+
+            return ret;
+        }
+
+        public virtual List<T> GetAll(Expression<Func<T, bool>> expression)
+        {
+            int retryCount = 0;
+            List<T> ret;
+            do
+            {
+                try
+                {
+                    using (var conn = new ConnectionFactory().GetConnection(_config.GetConnectionString("DefaultConnection")))
+                    {
+                        ret = conn.GetList<T>(expression)?.ToList();
+                    }
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (!ValidateException(ex, null, ref retryCount))
                     {
                         throw;
                     }

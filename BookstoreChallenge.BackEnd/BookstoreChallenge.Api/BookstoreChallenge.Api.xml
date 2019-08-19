@@ -23,5 +23,16 @@
             <response code="400">Fail request</response>
             <response code="500">Internal error</response>
         </member>
+        <member name="T:BookstoreChallenge.Api.Middlewares.DependencyInjectionMiddleware">
+            <summary>
+            Classe de inserção de injeção de dependência
+            </summary>
+        </member>
+        <member name="M:BookstoreChallenge.Api.Middlewares.DependencyInjectionMiddleware.AddDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método de inserção de injeção de dependência
+            </summary>
+            <param name="services">serviços</param>
+        </member>
     </members>
 </doc>

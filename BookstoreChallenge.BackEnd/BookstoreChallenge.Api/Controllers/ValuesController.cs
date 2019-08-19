@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookstoreChallenge.Api.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +20,8 @@ namespace BookstoreChallenge.Api.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [TypeFilter(typeof(TokenAuthFilterAttribute))]
+        public ActionResult<IEnumerable<string>> Get([FromHeader] string userName, [FromHeader] string token)
         {
             _logger.LogError("opa");
             return new string[] { "value1", "value2" };

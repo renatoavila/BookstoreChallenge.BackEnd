@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JWT" Version="5.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BookstoreChallenge.Repository\BookstoreChallenge.Repository.csproj" />
   </ItemGroup>
 
