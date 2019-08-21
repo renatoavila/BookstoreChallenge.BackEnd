@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Git\BookstoreChallenge.BackEnd\BookstoreChallenge.BackEnd\BookstoreChallenge.Api\BookstoreChallenge.Api.xml</DocumentationFile>
+    <DocumentationFile>.\BookstoreChallenge.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
