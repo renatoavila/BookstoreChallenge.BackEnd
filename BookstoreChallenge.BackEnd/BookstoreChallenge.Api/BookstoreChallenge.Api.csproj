@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Release\netcoreapp2.2\BookstoreChallenge.Api.xml</DocumentationFile>
+    <DocumentationFile>BookstoreChallenge.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
