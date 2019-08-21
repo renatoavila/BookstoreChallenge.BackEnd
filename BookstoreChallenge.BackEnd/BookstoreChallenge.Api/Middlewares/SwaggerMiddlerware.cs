@@ -33,7 +33,7 @@ namespace BookstoreChallenge.Api.Middlewares
                     PlatformServices.Default.Application.ApplicationName;
                 string caminhoXmlDoc =
                     Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
-
+                 
                 c.IncludeXmlComments(caminhoXmlDoc);
             });
         }
